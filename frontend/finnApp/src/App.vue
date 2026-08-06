@@ -1,11 +1,26 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import NavCompoments from './components/NavCompoments.vue';
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <div class="app-shell">
+    <NavCompoments />
+
+    <main class="page-content">
+      <router-view />
+    </main>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.app-shell {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.page-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+</style>
