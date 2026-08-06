@@ -1,0 +1,30 @@
+{
+  "users": [
+    { "id": "u1", "name": "Martin", "email": "martin@example.com" },
+    { "id": "u2", "name": "Ola", "email": "ola@example.com" }
+  ],
+  "ads": [
+    {
+      "id": "a1",
+      "title": "Brukt sykkel",
+      "description": "Fin bysykkel, lite brukt.",
+      "price": 1500,
+      "category": "Sport og friluft",
+      "location": "Oslo",
+      "imageUrl": "",
+      "sellerId": "u1",
+      "createdAt": "2026-08-01T10:00:00.000Z"
+    },
+    {
+      "id": "a2",
+      "title": "Sofa til salgs",
+      "description": "Tresetes sofa, gra farge.",
+      "price": 2000,
+      "category": "Mobler og interior",
+      "location": "Bergen",
+      "imageUrl": "",
+      "sellerId": "u2",
+      "createdAt": "2026-08-02T12:30:00.000Z"
+    }
+  ]
+}
