@@ -1,29 +1,37 @@
 <template>
-  <header class="navbar">
-    <router-link to="/" class="brand">Finn</router-link>
+  <div class="navbar">
+    <header class="navbarHeader">
+      <router-link to="/" class="brand">Finn</router-link>
 
-    <nav class="nav-links">
+      <nav class="nav-links">
         <router-link to="/new-ad" class="nav-link">Ny annonse</router-link>
         <router-link to="/messages" class="nav-link">Meldinger</router-link>
-      <router-link to="/profile" class="nav-link">Min Finn</router-link>
-    </nav>
-  </header>
+        <router-link to="/profile" class="nav-link">Min Finn</router-link>
+      </nav>
+    </header>
+  </div>
 </template>
 
 <script lang="ts" setup></script>
 
 <style scoped>
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
+  width: 100%;
   background: #ffffff;
   box-shadow: 0 2px 12px rgba(15, 23, 42, 0.08);
   position: sticky;
   top: 0;
   z-index: 10;
-  /* max-width: 900px; */
+}
+
+.navbarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .brand {
@@ -37,7 +45,8 @@
   display: flex;
   gap: 0.6rem;
   flex-wrap: wrap;
-  max-width: 700px;
+  max-width: 500px;
+  justify-content: flex-end;
 }
 
 .nav-link {
@@ -59,7 +68,7 @@
 }
 
 @media (max-width: 640px) {
-  .navbar {
+  .navbarHeader {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.8rem;
