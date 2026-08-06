@@ -2,7 +2,7 @@
 // Every stored record has an id so the storage layer can treat them the same way.
 
 export interface Entity {
-  id: string
+  userId: string
 }
 
 // A single marketplace listing.
@@ -13,7 +13,7 @@ export interface Ad extends Entity {
   category: string
   location: string
   imageUrl: string
-  sellerId: string
+  adId: string
   createdAt: string // ISO date string, set when the ad is made
 }
 
@@ -21,6 +21,8 @@ export interface Ad extends Entity {
 export interface User extends Entity {
   name: string
   email: string
+  password: string
+  ads: Ad[]
 }
 
 // A message sent between two users about an ad.

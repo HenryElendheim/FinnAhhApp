@@ -3,9 +3,8 @@
     <h1>Velkommen til Finn</h1>
     <p>Dette er startsiden for appen, hvor du kan se de nyeste annonsene.</p>
 
-    <!-- One block per ad. Just the raw fields for now, styling comes later. -->
     <ul>
-      <li v-for="ad in adsStore.items" :key="ad.id">
+      <li v-for="ad in adsStore.items" :key="ad.adId">
         <strong>{{ ad.title }}</strong> - {{ ad.price }} kr<br />
         {{ ad.category }} - {{ ad.location }}<br />
         {{ ad.description }}
@@ -18,7 +17,7 @@
 import { onMounted } from 'vue'
 import { useAdsStore } from '@/stores/ads'
 
-const adsStore = useAdsStore()
+const adsStore = useAdsStore();
 
 // Load the ads from storage once the page appears -> the seed shows up on first run.
 onMounted(() => {

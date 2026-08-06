@@ -39,6 +39,7 @@
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAdsStore } from '@/stores/ads'
+// import { v7 as uuidv7 } from 'uuid'
 
 const router = useRouter()
 const adsStore = useAdsStore()
@@ -61,7 +62,8 @@ function submit() {
     location: form.location,
     description: form.description,
     imageUrl: '', // no image support yet -> keep it empty
-    sellerId: 'u1', // placeholder until login exists -> everything is posted as Martin
+    userId: 'u1',
+    adId: 'u1', // placeholder until login exists -> everything is posted as Martin
   })
   router.push('/')
 }

@@ -1,8 +1,10 @@
 <template>
   <section class="view-card">
-    <h1>Profil</h1>
-    <p>Her finner du innstillinger og informasjon om profilen din.</p>
-    <button>Logg inn</button>
+    <h1>Registreringsside</h1>
+    
+    <form>
+        
+    </form>
   </section>
 </template>
 

@@ -9,7 +9,8 @@
 // Nothing outside this file talks to localStorage directly. That means the day
 // you swap to a real backend, only this file changes -> the stores and views
 // stay exactly the same.
-
+// YOOOOOOOOOYOOOOO
+// Weeeeeee
 import type { Entity } from '@/types/models'
 import seed from '@/data/db.json'
 
@@ -43,14 +44,14 @@ export function createCollection<T extends Entity>(key: string) {
 
     // Returns a single record by id, or undefined if it does not exist.
     getById(id: string): T | undefined {
-      return load<T>(key).find((item) => item.id === id)
+      return load<T>(key).find((item) => item.userId === id)
     },
 
     // Adds a new record. The caller sends everything except the id,
     // which is generated here -> so ids are always unique and consistent.
     add(data: Omit<T, 'id'>): T {
       const items = load<T>(key)
-      const record = { ...data, id: crypto.randomUUID() } as T
+      const record = { ...data, userId: crypto.randomUUID() } as T
       items.push(record)
       save(key, items)
       return record
@@ -60,7 +61,7 @@ export function createCollection<T extends Entity>(key: string) {
     // Returns the updated record, or undefined if no record matched.
     update(id: string, changes: Partial<Omit<T, 'id'>>): T | undefined {
       const items = load<T>(key)
-      const existing = items.find((item) => item.id === id)
+      const existing = items.find((item) => item.userId === id)
       if (existing === undefined) {
         return undefined
       }
@@ -68,7 +69,7 @@ export function createCollection<T extends Entity>(key: string) {
       const updated = { ...existing, ...changes } as T
       save(
         key,
-        items.map((item) => (item.id === id ? updated : item)),
+        items.map((item) => (item.userId === id ? updated : item)),
       )
       return updated
     },
@@ -76,7 +77,7 @@ export function createCollection<T extends Entity>(key: string) {
     // Removes the record with the given id. Returns true if something was removed.
     remove(id: string): boolean {
       const items = load<T>(key)
-      const next = items.filter((item) => item.id !== id)
+      const next = items.filter((item) => item.userId !== id)
       if (next.length === items.length) {
         return false
       }

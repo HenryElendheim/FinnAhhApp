@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NavCompoments from './components/NavCompoments.vue';
+import NavCompoments from './components/NavCompoment.vue';
 </script>
 
 <template>
