@@ -28,6 +28,7 @@ import { defineStore } from 'pinia'
 import type { User } from '@/types/models';
 import { load, save } from '../lib/storage.ts';
 import { createCollection } from '@/lib/storage';
+import { v7 as uuidv7 } from "uuid";
 
 const loggingInUser: User = reactive({
     userId: "x9",
@@ -51,9 +52,17 @@ const useUsersStore = defineStore('users', () => {
 
     function load () { items.value = users.getAll() };
     function create(data: Omit<User, 'userId' | 'createdAt'>) {
-        users.add({ ...data, userId: "xxx", createdAt: new Date().toISOString() })
+        users.add({ ...data, userId: uuidv7(), createdAt: new Date().toISOString() })
         load()
     }
+
+    // Removes a user by id and refreshes state.
+  function remove(id: string) {
+    users.remove(id)
+    load()
+  }
+
+  return { items, load, create, remove }
 })
 
 </script>

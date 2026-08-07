@@ -39,7 +39,7 @@
     <div v-else>
         <h1>Du er logget inn!</h1>
         <h2>Hei! pa deg</h2>
-        <h3>{{loggingInUser.name}}</h3>
+        <h3>{{ loggingInUser.name }}</h3>
     </div>
 </template>
 
@@ -47,6 +47,7 @@
 import { ref, reactive } from 'vue';
 import type { User } from '@/types/models';
 import { load } from '../lib/storage.ts';
+import { v7 as uuidv7 } from "uuid";
 
 
 const loggingInUser: User = reactive({
@@ -78,15 +79,49 @@ const areLoggedIn = ref<boolean>(false);
 
 <style scoped>
 .view-card {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 1.5rem;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
 
+.view-card h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  align-self: center;
+  align-items: center;
+  text-align: center;
+}
 form {
-    display: flex;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
 }
-
-
+input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+button {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+p {
+  text-align: center;
+}
+p button {
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
 </style>
