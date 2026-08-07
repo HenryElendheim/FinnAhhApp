@@ -63,23 +63,15 @@ import { v7 as uuidv7 } from "uuid";
 import { useRouter } from 'vue-router';
 import { useUsersStore } from '@/stores/users.ts';
 
+const loginActive = ref<boolean>(true);
+const areLoggedIn = ref<boolean>(false);
+    
 const loggingInUser = reactive({
     name: "",
     email: "",
     password: "",
     confirmPassword: ""
 });
-
-// const loggingInUser: User = reactive({
-//     userId: "x9",
-//     name: "",
-//     email: "",
-//     createdAt: "",
-//     password: "",
-//     ads: []
-// });
-
-const users: User[] = load<User>("USERS") ?? [];
 
 const router = useRouter();
 const usersStore = useUsersStore();
@@ -101,7 +93,10 @@ function submit() {
 }
 const login = () => {
     console.log('login');
-    // const sjekkings = JSON.parse(localStorage.getItem("users"));
+    const localUsers = localStorage.getItem("users");
+    let users : User[];
+    if (localUsers === null) users = [];
+    else users = JSON.parse(localUsers);
     // const matchingUsers = users.filter(user => user.email === loggingInUser.email);
     // const onlyOne = () => {
     //     if (matchingUsers.length > 1) {
@@ -111,8 +106,6 @@ const login = () => {
     //     return matchingUsers[0];
     // };
 }
-const loginActive = ref<boolean>(true);
-const areLoggedIn = ref<boolean>(false);
 </script>
 
 <style scoped>
