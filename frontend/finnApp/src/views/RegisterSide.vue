@@ -25,45 +25,37 @@
 <script lang="ts" setup>
 import { ref, reactive } from 'vue';
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router'
 import type { User } from '@/types/models';
 import { load, save } from '../lib/storage.ts';
 import { createCollection } from '@/lib/storage';
 import { v7 as uuidv7 } from "uuid";
+import { useUsersStore } from '@/stores/users.ts';
 
-const loggingInUser: User = reactive({
-    userId: "x9",
-    name: "",
+const router = useRouter();
+const usersStore = useUsersStore();
+const loggingInUser = reactive({
     email: "",
-    createdAt: "",
-    password: "",
-    ads: []
+    password: ""
 });
 
 const users = createCollection<User>("users");
 
-const register = () => {
+
+function submit() {
     console.log("registerings!");
+    // const currentUsers = usersStore.load();
+    usersStore.create({
+        name: "loggingInUser.name",
+        email: loggingInUser.email,
+        password: loggingInUser.password,
+        ads: []
+    })
+    router.push('/')
+    
     // users.push(loggingInUser);
     // save<User>("USERS", users);
 }
-
-const useUsersStore = defineStore('users', () => {
-    const items = ref<User[]>([]);
-
-    function load () { items.value = users.getAll() };
-    function create(data: Omit<User, 'userId' | 'createdAt'>) {
-        users.add({ ...data, userId: uuidv7(), createdAt: new Date().toISOString() })
-        load()
-    }
-
-    // Removes a user by id and refreshes state.
-  function remove(id: string) {
-    users.remove(id)
-    load()
-  }
-
-  return { items, load, create, remove }
-})
 
 </script>
 
