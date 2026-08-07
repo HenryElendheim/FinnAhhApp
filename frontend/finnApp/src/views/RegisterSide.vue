@@ -52,9 +52,6 @@ function submit() {
         ads: []
     })
     router.push('/')
-    
-    // users.push(loggingInUser);
-    // save<User>("USERS", users);
 }
 
 </script>
