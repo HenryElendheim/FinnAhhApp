@@ -2,11 +2,14 @@
   <section class="view-card">
     <h1>Profil</h1>
     <p>Her finner du innstillinger og informasjon om profilen din.</p>
-    <button>Logg inn</button>
+    <button @click="router.push('/login')">Logg inn</button>
   </section>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useRouter } from 'vue-router';
+const router = useRouter();
+</script>
 
 <style scoped>
 .view-card {

@@ -16,7 +16,7 @@ import seed from '@/data/db.json'
 
 // Reads a collection from localStorage. If it has never been saved before,
 // the matching slice of the seed is written in first -> so the app is never empty.
-function load<T>(key: string): T[] {
+export function load<T>(key: string): T[] {
   const stored = localStorage.getItem(key)
   if (stored !== null) {
     return JSON.parse(stored) as T[]
@@ -29,7 +29,7 @@ function load<T>(key: string): T[] {
 }
 
 // Writes the whole collection back to localStorage in one go.
-function save<T>(key: string, items: T[]): void {
+export function save<T>(key: string, items: T[]): void {
   localStorage.setItem(key, JSON.stringify(items))
 }
 

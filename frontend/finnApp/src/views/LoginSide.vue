@@ -1,41 +1,79 @@
 <template>
-    <section class="view-card">
-        <h1>Log inn</h1>
+    <div class=forms-container v-if="!areLoggedIn">
 
-        <form>
-            <div>
-                <label>E-post</label>
-                <input type="email" placeholder="E-post" />
-                <br />
-                <label>Passord</label>
-                <input type="password" placeholder="Passord" />
-            </div>
-            <button type="submit" @click.prevent="login">Logg inn</button>
-        </form>
-        <p>Ikke bruker? <button>Registrer deg nå!</button></p>
-    </section>
-    <h1>Regitrer</h1>
 
-        <form>
-            <div>
-                <label>E-post</label>
-                <input type="email" placeholder="E-post" />
-                <br />
-                <label>Passord</label>
-                <input type="password" placeholder="Passord" />
-            </div>
-            <button type="submit" @click.prevent="login">Logg inn</button>
-        </form>
-        <p>Ikke bruker? <button>Registrer deg nå!</button></p>
-    <section>
+        <section class="view-card" v-if="loginActive">
+            <h1>Logg inn</h1>
 
-    </section>
+            <form>
+                <div>
+                    <label>E-post</label>
+                    <input type="email" placeholder="E-post" />
+                    <br />
+                    <label>Passord</label>
+                    <input type="password" placeholder="Passord" />
+                </div>
+                <button type="submit" @click.prevent="login">Logg inn</button>
+            </form>
+            <p>Ikke bruker? <button type="button" @click="loginActive = !loginActive">Registrer deg nå!</button></p>
+        </section>
+        <section class="view-card" v-else>
+            <h1>Registrer</h1>
+
+            <form>
+                <div>
+                    <label>Navn</label>
+                    <input type="text" placeholder="Navn" v-model="loggingInUser.name" />
+                    <label>E-post</label>
+                    <input type="email" placeholder="E-post" v-model="loggingInUser.email" />
+                    <br />
+                    <label>Passord</label>
+                    <input type="password" placeholder="Passord" v-model="loggingInUser.password" />
+                </div>
+                <button type="submit" @click.prevent="login">Registrer</button>
+            </form>
+            <p>har du bruker? <button type="button" @click="loginActive = !loginActive">Logg inn!</button></p>
+
+        </section>
+    </div>
+    <div v-else>
+        <h1>Du er logget inn!</h1>
+        <h2>Hei! pa deg</h2>
+        <h3>{{loggingInUser.name}}</h3>
+    </div>
 </template>
 
 <script lang="ts" setup>
+import { ref, reactive } from 'vue';
+import type { User } from '@/types/models';
+import { load } from '../lib/storage.ts';
+
+
+const loggingInUser: User = reactive({
+    userId: "x9",
+    name: "",
+    email: "",
+    createdAt: "",
+    password: "",
+    ads: []
+});
+
+const users: User[] = load<User>("USERS") ?? [];
+
 const login = () => {
     console.log('login');
+    const matchingUsers = users.filter(user => user.email === loggingInUser.email);
+    const onlyOne = () => {
+        if (matchingUsers.length > 1) {
+            console.log("Flere enn en bruker har denne mailen, dette er feil.");
+            return;
+        }
+        return matchingUsers[0];
+    };
+
 }
+const loginActive = ref<boolean>(true);
+const areLoggedIn = ref<boolean>(false);
 </script>
 
 <style scoped>
@@ -45,4 +83,10 @@ const login = () => {
     padding: 1.5rem;
     box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
+
+form {
+    display: flex;
+}
+
+
 </style>

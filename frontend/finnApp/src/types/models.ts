@@ -22,6 +22,7 @@ export interface User extends Entity {
   name: string
   email: string
   password: string
+  createdAt: string
   ads: Ad[]
 }
 
