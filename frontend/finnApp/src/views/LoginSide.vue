@@ -1,25 +1,26 @@
 <template>
-    <div class=forms-container v-if="!areLoggedIn">
+    <div class=forms-container v-if="!loggedInState">
 
 
-        <section class="view-card" v-if="loginActive">
+        <section class="view-card" v-if="loginPageActive">
 
             <h1>Logg inn</h1>
 
             <form>
                 <div>
                     <label>E-post</label>
-                    <input type="email" placeholder="E-post" />
+                    <input type="text" placeholder="E-post" v-model="loggingInUser.name"/>
                     <br />
                     <label>Passord</label>
-                    <input type="password" placeholder="Passord" />
+                    <input type="text" placeholder="Passord" v-model="loggingInUser.password"/>
                 </div>
                 <button type="submit" @click.prevent="login">Logg inn</button>
             </form>
 
-            <p>Ikke bruker? <button type="button" @click="loginActive = !loginActive">Registrer deg nå!</button></p>
+            <p>Ikke bruker? <button type="button" @click="loginPageActive = !loginPageActive">Registrer deg nå!</button>
+            </p>
         </section>
-        <section class="view-card" v-else>
+        <section class="view-card" v-else> <!--REGISTRERING-->
             <h1>Registrer</h1>
 
             <form>
@@ -29,22 +30,22 @@
                 </label>
                 <label>
                     E-post
-                    <input v-model="loggingInUser.email" type="email" placeholder="Skriv inn e-posten din" />
+                    <input v-model="loggingInUser.email" type="text" placeholder="Skriv inn e-posten din" />
                 </label>
                 <label>
                     Password
-                    <input v-model="loggingInUser.password" type="password" placeholder="Skriv inn passordet ditt" />
+                    <input v-model="loggingInUser.password" type="text" placeholder="Skriv inn passordet ditt" />
                 </label>
                 <label>
                     Bekreft Password
-                    <input v-model="loggingInUser.confirmPassword" type="password"
+                    <input v-model="loggingInUser.confirmPassword" type="text"
                         placeholder="Bekreft passordet ditt" />
                 </label>
                 <button type="submit" @click.prevent="submit">
                     Registrer
                 </button>
             </form>
-            <p>har du bruker? <button type="button" @click="loginActive = !loginActive">Logg inn!</button></p>
+            <p>har du bruker? <button type="button" @click="loginPageActive = !loginPageActive">Logg inn!</button></p>
 
         </section>
     </div>
@@ -63,9 +64,9 @@ import { v7 as uuidv7 } from "uuid";
 import { useRouter } from 'vue-router';
 import { useUsersStore } from '@/stores/users.ts';
 
-const loginActive = ref<boolean>(true);
-const areLoggedIn = ref<boolean>(false);
-    
+const loginPageActive = ref<boolean>(true);
+const loggedInState = ref<boolean>(false);
+
 const loggingInUser = reactive({
     name: "",
     email: "",
@@ -86,7 +87,7 @@ function submit() {
             password: loggingInUser.password,
             ads: []
         })
-        router.push('/')
+        router.push('/profile')
         return;
     }
     console.log("Passordene passer ikke sammen :( y would u do that...");
@@ -94,18 +95,22 @@ function submit() {
 const login = () => {
     console.log('login');
     const localUsers = localStorage.getItem("users");
-    let users : User[];
+    let users: User[];
     if (localUsers === null) users = [];
     else users = JSON.parse(localUsers);
-    // const matchingUsers = users.filter(user => user.email === loggingInUser.email);
-    // const onlyOne = () => {
-    //     if (matchingUsers.length > 1) {
-    //         console.log("Flere enn en bruker har denne mailen, dette er feil.");
-    //         return;
-    //     }
-    //     return matchingUsers[0];
-    // };
+
+    const yy = users.filter(savedUser =>
+        loggingInUser.email === savedUser.email
+        && loggingInUser.password === savedUser.password
+    );
+
+    console.log(loggingInUser.email, " === ", users[4]?.email, " ? => ", loggingInUser.email === users[4]?.email)
+
+    console.log(loggedInState.value);
+    console.log(yy);
+    router.push('/profile')
 }
+
 </script>
 
 <style scoped>
