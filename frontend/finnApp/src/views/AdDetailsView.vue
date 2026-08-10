@@ -1,9 +1,14 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import seed from '@/data/db.json';
+import { useAdsStore } from '@/stores/ads';
 
 const route = useRoute();
+const adsStore = useAdsStore();
+
+onMounted(() => {
+  adsStore.load();
+});
 
 const ad = computed(() => {
   const adId = Array.isArray(route.params.adId)
@@ -12,18 +17,7 @@ const ad = computed(() => {
 
   if (!adId) return null;
 
-  return (
-    (
-      seed.ads as Array<{
-        adId: string;
-        title: string;
-        description: string;
-        price: number;
-        category: string;
-        location: string;
-      }>
-    ).find((item) => item.adId === adId) ?? null
-  );
+  return adsStore.items.find((item) => item.adId === adId) ?? null;
 });
 </script>
 
