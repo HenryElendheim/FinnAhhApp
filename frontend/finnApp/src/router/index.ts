@@ -14,6 +14,11 @@ const router = createRouter({
     { path: '/new-ad', name: 'new-ad', component: NewAdSide },
     { path: '/profile', name: 'profile', component: ProfilSide },
     { path: '/login', name: 'login', component: LoginSide },
+    {
+      path: '/ad/:adId',
+      name: 'ad-details',
+      component: () => import('../views/AdDetailsView.vue'),
+    },
   ],
 });
 

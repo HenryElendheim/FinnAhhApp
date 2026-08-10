@@ -14,15 +14,15 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
-import { useAdsStore } from '@/stores/ads'
+import { onMounted } from 'vue';
+import { useAdsStore } from '@/stores/ads';
 
 const adsStore = useAdsStore();
 
 // Load the ads from storage once the page appears -> the seed shows up on first run.
 onMounted(() => {
-  adsStore.load()
-})
+  adsStore.load();
+});
 </script>
 
 <style scoped>
