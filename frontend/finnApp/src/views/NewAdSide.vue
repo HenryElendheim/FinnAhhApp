@@ -5,20 +5,28 @@
 
     <!-- @submit.prevent stops the browser from reloading the page on submit. -->
     <form @submit.prevent="submit">
-      <label>
-        Tittel
-        <input v-model="form.title" type="text" required />
-      </label>
+      <div class="field">
+        <label for="title">Tittel</label>
+        <input id="title" v-model="form.title" type="text" required />
+      </div>
 
-      <label>
-        Pris (kr)
-        <input v-model.number="form.price" type="number" min="0" required />
-      </label>
+      <div class="field">
+        <label for="price">Pris (kr)</label>
+        <input id="price" v-model.number="form.price" type="number" min="0" required />
+       
+      </div>
 
-      <label>
+      <label name="category">
         Kategori
-        <input v-model="form.category" type="text" required />
       </label>
+      <select name="categories" id="">
+        <option value="vehicles">Fartøy</option>
+        <option value="electronics">Elektronikk</option>
+        <option value="clothing">Klær</option>
+        <option value="furniture">Møbler</option>
+        <option value="leisure">Fritid</option>
+        <option value="sports">Sport</option>
+      </select>
 
       <label>
         Sted
@@ -52,7 +60,7 @@ const adsStore = useAdsStore();
 const form = reactive({
   title: '',
   price: 0,
-  category: '',
+  category: [] as string[],
   location: '',
   description: '',
   imageUrl: '',

@@ -10,7 +10,7 @@ export interface Ad extends Entity {
   title: string
   description: string
   price: number
-  category: string
+  category: string[]
   location: string
   imageUrl: string
   adId: string

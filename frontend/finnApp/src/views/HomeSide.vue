@@ -31,6 +31,12 @@ import { useAdsStore } from '@/stores/ads';
 
 const adsStore = useAdsStore();
 
+// function sortAdsByOldness() {
+//   const itemsArray = adsStore.items;
+
+//   return itemsArray.sort((a, b) => new Date(b.date) - new Date(a.date));
+// }
+
 // Load the ads from storage once the page appears -> the seed shows up on first run.
 onMounted(() => {
   adsStore.load();

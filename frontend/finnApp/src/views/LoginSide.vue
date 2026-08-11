@@ -68,6 +68,9 @@ import type { _ } from 'vue-router/dist/index-BN0B0y8a.js';
 
 const loginPageActive = ref<boolean>(true);
 const loggedInState = ref<boolean>(false);
+// const emit = defineEmits<{
+//     (e: 'login', user: User): void;
+// }>();
 
 const errorMessage = reactive({
     message: ""
@@ -121,21 +124,30 @@ const login = () => {
     errorMessage.message = ``;
     const users = getLocalUsers();
 
+    const ff = users.map(user => {
+        return (
+            user.name === loggingInUser.name
+            && user.password === loggingInUser.password
+        ) ? true : false;
+    });
+
+    console.log(ff);
+
     const clientLoggingIn = users.filter((savedUser, _, arr) =>
         loggingInUser.email === savedUser.email
         && loggingInUser.password === savedUser.password
         && arr.length === 1
-    )[0];
+    );
+    console.log(clientLoggingIn);
 
     if (clientLoggingIn === undefined) {
         errorMessage.message = `Denne brukeren er ikke registrert fra før av. Lag en bruker?`;
         console.log("They dont fucking exist!!!");
         return;
-    } else {
-        loggedInState.value = true;
     }
 
-    router.push('/profile')
+    router.push('/profile');
+    usersStore.setLoggedIn(true);
 }
 
 const getLocalUsers = (): User[] => {
