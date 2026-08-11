@@ -36,6 +36,7 @@ const ad = computed(() => {
         <strong>{{ ad.price }} kr</strong>
       </h2>
       <p>{{ ad.description }}</p>
+      <p>{{ ad.category }}</p>
     </div>
   </div>
   <p v-else>Annonsen ble ikke funnet.</p>

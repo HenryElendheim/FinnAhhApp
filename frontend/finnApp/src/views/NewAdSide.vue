@@ -67,7 +67,7 @@ const usersStore = useUsersStore();
 const form = reactive({
   title: '',
   price: 0,
-  category: [] as string[],
+  category: "",
   location: '',
   description: '',
   imageUrl: '',

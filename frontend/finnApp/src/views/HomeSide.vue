@@ -2,18 +2,21 @@
   <section class="view-card">
     <h1>Velkommen til Finn</h1>
     <p>Dette er startsiden, hvor du kan se de nyeste annonsene.</p>
-
+    <input type="text" name="search" id="" placeholder="Søk" v-model="form.words">
+    <select v-model="form.category" name="categories">
+      <option value="" selected disabled>Velg Kategori</option>
+      <option value="vehicles">Fartøy</option>
+      <option value="electronics">Elektronikk</option>
+      <option value="clothing">Klær</option>
+      <option value="furniture">Møbler</option>
+      <option value="leisure">Fritid</option>
+      <option value="sports">Sport</option>
+    </select>
+    <button @click="filterAds()">Send</button>
     <ul>
-      <li
-        v-for="ad in sortAdsByOldness()"
-        :key="ad.adId"
-        @click="$router.push({ name: 'ad-details', params: { adId: ad.adId } })"
-      >
-        <img
-          class="ad-image"
-          :src="ad.imageUrl || '/public/placeholder.png'"
-          alt="Ad Image"
-        />
+      <li v-for="ad in filterAds()" :key="ad.adId"
+        @click="$router.push({ name: 'ad-details', params: { adId: ad.adId } })">
+        <img class="ad-image" :src="ad.imageUrl || '/public/placeholder.png'" alt="Ad Image" />
         <div>
           <strong>{{ ad.price }} kr</strong><br />
           {{ ad.title }}<br />
@@ -26,10 +29,27 @@
 </template>
 
 <script lang="ts" setup>
+import { reactive } from 'vue';
 import { onMounted } from 'vue';
 import { useAdsStore } from '@/stores/ads';
 
 const adsStore = useAdsStore();
+
+const categories = ["Fartøy", "Elektronikk", "Klær", "Fritid", "Sport"];
+
+const form = reactive({
+  words: "",
+  category: ""
+})
+
+function filterAds() {
+  const itemsArray = adsStore.items;
+  return itemsArray.filter((ad, i) => {
+    return ad.title.toLowerCase().includes(form.words.toLowerCase());
+    // (ad.title.toLowerCase().includes(form.words.toLowerCase()) && categories[i] === form.category);
+  })
+
+}
 
 function sortAdsByOldness() {
   const itemsArray = adsStore.items;
@@ -50,6 +70,7 @@ onMounted(() => {
   padding: 1.5rem;
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
 }
+
 li {
   cursor: pointer;
   margin-bottom: 1rem;
@@ -58,10 +79,12 @@ li {
 
   gap: 1rem;
 }
+
 li:hover {
   background-color: #f0f0f0;
   border-radius: 8px;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -69,6 +92,7 @@ ul {
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
 }
+
 .ad-image {
   max-width: 100%;
   height: auto;
