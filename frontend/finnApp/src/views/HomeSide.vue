@@ -10,14 +10,15 @@
         @click="$router.push({ name: 'ad-details', params: { adId: ad.adId } })"
       >
         <img
-          src="/public/placeholder.png"
+          class="ad-image"
+          :src="ad.imageUrl || '/public/placeholder.png'"
           alt="Ad Image"
-          style="max-width: 100%; height: auto; margin-top: 0.5rem"
         />
         <div>
-          <strong>{{ ad.title }}</strong> - {{ ad.price }} kr<br />
-          {{ ad.category }} - {{ ad.location }}<br />
-          {{ ad.description }}
+          <strong>{{ ad.price }} kr</strong><br />
+          {{ ad.title }}<br />
+          <!-- {{ ad.category }}<br /> -->
+          {{ ad.location }}<br />
         </div>
       </li>
     </ul>
@@ -46,6 +47,9 @@ onMounted(() => {
 li {
   cursor: pointer;
   margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+
   gap: 1rem;
 }
 li:hover {
@@ -58,5 +62,13 @@ ul {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1rem;
+}
+.ad-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
 }
 </style>

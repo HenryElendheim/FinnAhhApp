@@ -24,6 +24,10 @@
         Sted
         <input v-model="form.location" type="text" required />
       </label>
+      <label>
+        Bilde-URL
+        <input v-model="form.imageUrl" type="text" required />
+      </label>
 
       <label>
         Beskrivelse
@@ -36,13 +40,13 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import { useAdsStore } from '@/stores/ads'
-import { v7 as uuidv7 } from "uuid";
+import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAdsStore } from '@/stores/ads';
+import { v7 as uuidv7 } from 'uuid';
 
-const router = useRouter()
-const adsStore = useAdsStore()
+const router = useRouter();
+const adsStore = useAdsStore();
 
 // Holds what the user types. Starts empty each time the page opens.
 const form = reactive({
@@ -51,7 +55,8 @@ const form = reactive({
   category: '',
   location: '',
   description: '',
-})
+  imageUrl: '',
+});
 
 // Saves the ad, then sends the user to the home page to see it in the list.
 function submit() {
@@ -61,11 +66,11 @@ function submit() {
     category: form.category,
     location: form.location,
     description: form.description,
-    imageUrl: '', // no image support yet -> keep it empty
+    imageUrl: form.imageUrl, // use the image URL from the form
     userId: 'u1', // TRENGER EN ISLOGGEDIN (forslag, ikke ekte navn eller eksisterende variabel)
     adId: uuidv7(), // placeholder until login exists -> everything is posted as Martin
-  })
-  router.push('/')
+  });
+  router.push('/');
 }
 </script>
 

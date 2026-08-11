@@ -1,7 +1,19 @@
 {
   "users": [
-    { "userId": "u1", "name": "Martin", "email": "martin@example.com", "password": "martin123", "ads":[]},
-    { "userId": "u2", "name": "Ola", "email": "ola@example.com", "password": "ola123", "ads":[]}
+    {
+      "userId": "u1",
+      "name": "Martin",
+      "email": "martin@example.com",
+      "password": "martin123",
+      "ads": []
+    },
+    {
+      "userId": "u2",
+      "name": "Ola",
+      "email": "ola@example.com",
+      "password": "ola123",
+      "ads": []
+    }
   ],
   "ads": [
     {
@@ -11,18 +23,18 @@
       "price": 1500,
       "category": "Sport og friluft",
       "location": "Oslo",
-      "imageUrl": "",
+      "imageUrl": "https://trondheimsykkelservice.no/wp-content/uploads/2024/01/Marin-Presidio-3-1.jpg",
       "userId": "u1",
       "createdAt": "2026-08-01T10:00:00.000Z"
     },
     {
       "adId": "a2",
       "title": "Sofa til salgs",
-      "description": "Tresetes sofa, gra farge.",
+      "description": "Tresetes sofa, grå farge.",
       "price": 2000,
       "category": "Mobler og interior",
       "location": "Bergen",
-      "imageUrl": "",
+      "imageUrl": "https://livingoutlet-i02.mycdn.no/mysimgprod/livingoutlet_mystore_no/images/temp_mystore_1700071366_0east_1200x1200_concrete.webp/w800h800.webp",
       "userId": "u2",
       "createdAt": "2026-08-02T12:30:00.000Z"
     }
