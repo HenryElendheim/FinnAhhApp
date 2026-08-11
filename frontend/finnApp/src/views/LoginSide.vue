@@ -4,48 +4,49 @@
 
         <section class="view-card" v-if="loginPageActive">
 
-            <h1>Logg inn</h1>
+            <h1>Logg deg inn</h1>
 
             <form>
                 <div>
-                    <label>E-post</label>
-                    <input type="text" placeholder="E-post" v-model="loggingInUser.name"/>
+                    <label for="login">E-post</label>
+                    <input v-model="loggingInUser.email" type="text" placeholder="E-post" />
                     <br />
-                    <label>Passord</label>
-                    <input type="text" placeholder="Passord" v-model="loggingInUser.password"/>
+                    <label for="password">Passord</label>
+                    <input v-model="loggingInUser.password" type="text" placeholder="Passord" />
                 </div>
+                <p v-if="errorMessage.message.length > 5" class="errorMessage" v-html="errorMessage.message"></p>
                 <button type="submit" @click.prevent="login">Logg inn</button>
             </form>
 
-            <p>Ikke bruker? <button type="button" @click="loginPageActive = !loginPageActive">Registrer deg nå!</button>
+            <p>Ikke bruker? <button type="button" @click="loginPageActive = !loginPageActive; errorMessage.message = ''">Registrer deg nå!</button>
             </p>
         </section>
         <section class="view-card" v-else> <!--REGISTRERING-->
             <h1>Registrer</h1>
+            <p v-if="errorMessage.message.length > 5" class="errorMessage" v-html="errorMessage.message"></p>
 
             <form>
-                <label>
+                <label for="name">
                     Navn
-                    <input v-model="loggingInUser.name" type="text" placeholder="Skriv inn navnet ditt" />
                 </label>
-                <label>
+                <input v-model="loggingInUser.name" type="text" placeholder="Skriv inn navnet ditt" />
+                <label for="email">
                     E-post
-                    <input v-model="loggingInUser.email" type="text" placeholder="Skriv inn e-posten din" />
                 </label>
-                <label>
+                <input v-model="loggingInUser.email" type="text" placeholder="Skriv inn e-posten din" />
+                <label for="password">
                     Password
                     <input v-model="loggingInUser.password" type="text" placeholder="Skriv inn passordet ditt" />
                 </label>
-                <label>
+                <label for="confirmPassword">
                     Bekreft Password
-                    <input v-model="loggingInUser.confirmPassword" type="text"
-                        placeholder="Bekreft passordet ditt" />
                 </label>
-                <button type="submit" @click.prevent="submit">
+                <input v-model="loggingInUser.confirmPassword" type="text" placeholder="Bekreft passordet ditt" />
+                <button for="register" type="submit" @click.prevent="submit">
                     Registrer
                 </button>
             </form>
-            <p>har du bruker? <button type="button" @click="loginPageActive = !loginPageActive">Logg inn!</button></p>
+            <p>har du bruker? <button for="login" type="button" @click="loginPageActive = !loginPageActive; errorMessage.message = ''">Logg inn!</button></p>
 
         </section>
     </div>
@@ -63,9 +64,14 @@ import { load } from '../lib/storage.ts';
 import { v7 as uuidv7 } from "uuid";
 import { useRouter } from 'vue-router';
 import { useUsersStore } from '@/stores/users.ts';
+import type { _ } from 'vue-router/dist/index-BN0B0y8a.js';
 
 const loginPageActive = ref<boolean>(true);
 const loggedInState = ref<boolean>(false);
+
+const errorMessage = reactive({
+    message: ""
+});
 
 const loggingInUser = reactive({
     name: "",
@@ -80,6 +86,22 @@ const usersStore = useUsersStore();
 function submit() {
     console.log("registerings!");
     // const currentUsers = usersStore.load();
+    errorMessage.message = ``;
+    const users = getLocalUsers();
+
+    if (users.map(user => {
+        return (
+            user.name === loggingInUser.name
+            && user.email === loggingInUser.email
+        ) ? true : false;
+    }).some(existAlready => existAlready === true)) {
+        setErrorMessage(`Bruker med samme navn og mail finnes allerede.`);
+        return;
+    }
+    if (loggingInUser.password !== loggingInUser.confirmPassword) {
+        setErrorMessage(`Passord er ikke riktig.`)
+    }
+
     if (loggingInUser.password === loggingInUser.confirmPassword) {
         usersStore.create({
             name: loggingInUser.name,
@@ -90,25 +112,42 @@ function submit() {
         router.push('/profile')
         return;
     }
+    errorMessage.message = `Passord og bekreftelse må staves likt.`;
     console.log("Passordene passer ikke sammen :( y would u do that...");
 }
+
 const login = () => {
     console.log('login');
+    errorMessage.message = ``;
+    const users = getLocalUsers();
+
+    const clientLoggingIn = users.filter((savedUser, _, arr) =>
+        loggingInUser.email === savedUser.email
+        && loggingInUser.password === savedUser.password
+        && arr.length === 1
+    )[0];
+
+    if (clientLoggingIn === undefined) {
+        errorMessage.message = `Denne brukeren er ikke registrert fra før av. Lag en bruker?`;
+        console.log("They dont fucking exist!!!");
+        return;
+    } else {
+        loggedInState.value = true;
+    }
+
+    router.push('/profile')
+}
+
+const getLocalUsers = (): User[] => {
     const localUsers = localStorage.getItem("users");
     let users: User[];
     if (localUsers === null) users = [];
     else users = JSON.parse(localUsers);
+    return users;
+}
 
-    const yy = users.filter(savedUser =>
-        loggingInUser.email === savedUser.email
-        && loggingInUser.password === savedUser.password
-    );
-
-    console.log(loggingInUser.email, " === ", users[4]?.email, " ? => ", loggingInUser.email === users[4]?.email)
-
-    console.log(loggedInState.value);
-    console.log(yy);
-    router.push('/profile')
+const setErrorMessage = (newMessage: string) => {
+    errorMessage.message = newMessage;
 }
 
 </script>
@@ -118,7 +157,17 @@ const login = () => {
     background: #ffffff;
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    box-shadow: 0 8px 24px #0f172a0f;
+}
+
+.errorMessage {
+    padding: 0;
+    margin: 0;
+    color: #007bff;
+    filter: hue-rotate(-30deg) brightness(1.4) saturate(0.7);
+    font-family: monospace;
+    /* filter: hue-rotate(105deg) saturate(0.7); */
+    /* font-family: Arial, Helvetica, sans-serif; */
 }
 
 .view-card h1 {
