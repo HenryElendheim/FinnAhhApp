@@ -25,10 +25,18 @@ const ad = computed(() => {
   <div>
     <button @click="$router.back()">Tilbake</button>
   </div>
-  <div v-if="ad">
-    <h1>{{ ad.title }}</h1>
-    <p>{{ ad.price }} kr</p>
-    <p>{{ ad.description }}</p>
+  <div v-if="ad" class="ad">
+    <div class="left">
+      <img :src="ad.imageUrl || '/public/placeholder.png'" alt="Ad Image" />
+    </div>
+    <div class="right">
+      <h1>{{ ad.title }}</h1>
+      <p>Til salgs</p>
+      <h2>
+        <strong>{{ ad.price }} kr</strong>
+      </h2>
+      <p>{{ ad.description }}</p>
+    </div>
   </div>
   <p v-else>Annonsen ble ikke funnet.</p>
 </template>
@@ -42,5 +50,20 @@ button {
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
+}
+.ad {
+  display: flex;
+  gap: 1rem;
+}
+.left {
+  flex: 1;
+}
+.right {
+  flex: 2;
+}
+.ad img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 </style>

@@ -37,6 +37,61 @@
       "imageUrl": "https://livingoutlet-i02.mycdn.no/mysimgprod/livingoutlet_mystore_no/images/temp_mystore_1700071366_0east_1200x1200_concrete.webp/w800h800.webp",
       "userId": "u2",
       "createdAt": "2026-08-02T12:30:00.000Z"
+    },
+    {
+      "adId": "a3",
+      "title": "Ikea skrivebord",
+      "description": "Pent og praktisk skrivebord med to skuffer.",
+      "price": 800,
+      "category": "Mobler og interior",
+      "location": "Trondheim",
+      "imageUrl": "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=900&q=80",
+      "userId": "u1",
+      "createdAt": "2026-08-03T09:15:00.000Z"
+    },
+    {
+      "adId": "a4",
+      "title": "Nintendo Switch",
+      "description": "Nintendo Switch med dokkingstasjon og to kontrollere.",
+      "price": 2400,
+      "category": "Elektronikk",
+      "location": "Stavanger",
+      "imageUrl": "https://images.unsplash.com/photo-1578303512597-81e6cc155b3e?auto=format&fit=crop&w=900&q=80",
+      "userId": "u2",
+      "createdAt": "2026-08-04T16:45:00.000Z"
+    },
+    {
+      "adId": "a5",
+      "title": "Langrennsski",
+      "description": "Langrennsski for voksen, brukt noen få ganger.",
+      "price": 1200,
+      "category": "Sport og friluft",
+      "location": "Lillehammer",
+      "imageUrl": "https://images.unsplash.com/photo-1551524559-8af4e6624178?auto=format&fit=crop&w=900&q=80",
+      "userId": "u1",
+      "createdAt": "2026-08-05T11:20:00.000Z"
+    },
+    {
+      "adId": "a6",
+      "title": "Kaffemaskin",
+      "description": "Helautomatisk kaffemaskin i god stand.",
+      "price": 1800,
+      "category": "Hjem og hage",
+      "location": "Kristiansand",
+      "imageUrl": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80",
+      "userId": "u2",
+      "createdAt": "2026-08-06T08:40:00.000Z"
+    },
+    {
+      "adId": "a7",
+      "title": "Akustisk gitar",
+      "description": "Velholdt gitar, passer fint for nybegynnere.",
+      "price": 1000,
+      "category": "Fritid og hobby",
+      "location": "Tromso",
+      "imageUrl": "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?auto=format&fit=crop&w=900&q=80",
+      "userId": "u1",
+      "createdAt": "2026-08-07T14:10:00.000Z"
     }
   ]
 }
