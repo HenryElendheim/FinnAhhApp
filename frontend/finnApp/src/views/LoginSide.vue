@@ -18,7 +18,8 @@
                 <button type="submit" @click.prevent="login">Logg inn</button>
             </form>
 
-            <p>Ikke bruker? <button type="button" @click="loginPageActive = !loginPageActive; errorMessage.message = ''">Registrer deg nå!</button>
+            <p>Ikke bruker? <button type="button"
+                    @click="loginPageActive = !loginPageActive; errorMessage.message = ''">Registrer deg nå!</button>
             </p>
         </section>
         <section class="view-card" v-else> <!--REGISTRERING-->
@@ -46,7 +47,8 @@
                     Registrer
                 </button>
             </form>
-            <p>har du bruker? <button for="login" type="button" @click="loginPageActive = !loginPageActive; errorMessage.message = ''">Logg inn!</button></p>
+            <p>har du bruker? <button for="login" type="button"
+                    @click="loginPageActive = !loginPageActive; errorMessage.message = ''">Logg inn!</button></p>
 
         </section>
     </div>
@@ -124,28 +126,27 @@ const login = () => {
     errorMessage.message = ``;
     const users = getLocalUsers();
 
-    const ff = users.map(user => {
-        return (
-            user.name === loggingInUser.name
-            && user.password === loggingInUser.password
-        ) ? true : false;
-    });
-
-    console.log(ff);
-
-    const clientLoggingIn = users.filter((savedUser, _, arr) =>
-        loggingInUser.email === savedUser.email
-        && loggingInUser.password === savedUser.password
-        && arr.length === 1
+    const doTheyExist = users.map(user =>
+        user.name === loggingInUser.email && user.password === loggingInUser.password
     );
-    console.log(clientLoggingIn);
 
-    if (clientLoggingIn === undefined) {
-        errorMessage.message = `Denne brukeren er ikke registrert fra før av. Lag en bruker?`;
+    console.log(users.map((user) =>
+        user.email + " === " + loggingInUser.email + " ? " + (user.email === loggingInUser.email)
+    ));
+
+    if (doTheyExist.some(f => f === true) === false) {
+        errorMessage.message = `Denne brukeren er ikke registrert fra før av. Lag en ny bruker?`;
         console.log("They dont fucking exist!!!");
         return;
     }
-
+    const checkedUser = users.filter(user =>
+        user.email === loggingInUser.email
+        && user.password === loggingInUser.password
+    )[0];
+    if (checkedUser === undefined) return;
+    console.log("Sjekk ferdig! Ikke endret ennå...", usersStore.user);
+    usersStore.user = checkedUser;
+    console.log("Sjekk ferdig! Endring???...", usersStore.user);
     router.push('/profile');
     usersStore.setLoggedIn(true);
 }

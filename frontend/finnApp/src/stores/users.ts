@@ -9,11 +9,13 @@ const users = createCollection<User>('users');
 export const useUsersStore = defineStore('users', () => {
   const items = ref<User[]>([]);
   const isLoggedIn = ref<boolean>(false);
+  const user = ref<User | null>(null)
 
   function setLoggedIn(state : boolean = false) {
     isLoggedIn.value = state;
   }
   function logout() {
+    user.value = null;
     setLoggedIn(false);
   }
 
@@ -29,5 +31,5 @@ export const useUsersStore = defineStore('users', () => {
     load()
   }
 
-  return { items, load, create, remove, isLoggedIn, setLoggedIn, logout }
+  return { items, load, create, remove, isLoggedIn, setLoggedIn, logout , user}
 })

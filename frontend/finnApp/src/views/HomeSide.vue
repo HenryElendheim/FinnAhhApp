@@ -5,7 +5,7 @@
 
     <ul>
       <li
-        v-for="ad in adsStore.items"
+        v-for="ad in sortAdsByOldness()"
         :key="ad.adId"
         @click="$router.push({ name: 'ad-details', params: { adId: ad.adId } })"
       >
@@ -31,11 +31,11 @@ import { useAdsStore } from '@/stores/ads';
 
 const adsStore = useAdsStore();
 
-// function sortAdsByOldness() {
-//   const itemsArray = adsStore.items;
+function sortAdsByOldness() {
+  const itemsArray = adsStore.items;
 
-//   return itemsArray.sort((a, b) => new Date(b.date) - new Date(a.date));
-// }
+  return itemsArray.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+}
 
 // Load the ads from storage once the page appears -> the seed shows up on first run.
 onMounted(() => {
