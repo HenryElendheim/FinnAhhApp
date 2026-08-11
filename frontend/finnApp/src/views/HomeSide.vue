@@ -1,7 +1,7 @@
 <template>
   <section class="view-card">
     <h1>Velkommen til Finn</h1>
-    <p>Dette er startsiden for appen, hvor du kan se de nyeste annonsene.</p>
+    <p>Dette er startsiden, hvor du kan se de nyeste annonsene.</p>
 
     <ul>
       <li

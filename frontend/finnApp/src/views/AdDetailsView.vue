@@ -22,6 +22,9 @@ const ad = computed(() => {
 </script>
 
 <template>
+  <div>
+    <button @click="$router.back()">Tilbake</button>
+  </div>
   <div v-if="ad">
     <h1>{{ ad.title }}</h1>
     <p>{{ ad.price }} kr</p>
@@ -30,4 +33,14 @@ const ad = computed(() => {
   <p v-else>Annonsen ble ikke funnet.</p>
 </template>
 
-<style scoped></style>
+<style scoped>
+button {
+  margin-bottom: 1rem;
+  color: #ffffff;
+  background-color: #1d4ed8;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+</style>
