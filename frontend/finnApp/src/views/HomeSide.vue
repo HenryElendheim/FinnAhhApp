@@ -2,17 +2,29 @@
   <section class="view-card">
     <h1>Velkommen til Finn</h1>
     <p>Dette er startsiden, hvor du kan se de nyeste annonsene.</p>
-    <input type="text" name="search" id="" placeholder="Søk" v-model="form.words">
-    <select v-model="form.category" name="categories">
-      <option value="" selected disabled>Velg Kategori</option>
-      <option value="vehicles">Fartøy</option>
-      <option value="electronics">Elektronikk</option>
-      <option value="clothing">Klær</option>
-      <option value="furniture">Møbler</option>
-      <option value="leisure">Fritid</option>
-      <option value="sports">Sport</option>
-    </select>
-    <button @click="filterAds()">Send</button>
+    <p>Her kan du søke etter annonser:</p>
+    <p class="search">
+      <input type="text" name="search" id="" placeholder="Søkeord" v-model="form.words">
+      <input type="text" name="search" id="" placeholder="Søk by" v-model="form.city">
+      <select v-model="form.category" name="categories">
+        <option value="" selected disabled>Velg Kategori</option>
+        <!-- <option v-for="category in categories">{{ category }}</option> -->
+        <option value="Fartøy">Fartøy</option>
+        <option value="Elektronikk">Elektronikk</option>
+        <option value="Klær">Klær</option>
+        <option value="Møbler">Møbler</option>
+        <option value="Fritid">Fritid</option>
+        <option value="Sport">Sport</option>
+      </select>
+
+      <button @click="
+        form.words = '';
+      form.category = '';
+      form.city = ''
+        ">
+        Reset
+      </button>
+    </p>
     <ul>
       <li v-for="ad in filterAds()" :key="ad.adId"
         @click="$router.push({ name: 'ad-details', params: { adId: ad.adId } })">
@@ -35,18 +47,28 @@ import { useAdsStore } from '@/stores/ads';
 
 const adsStore = useAdsStore();
 
-const categories = ["Fartøy", "Elektronikk", "Klær", "Fritid", "Sport"];
+const categories = ["Møbler", "Elektronikk", "Klær", "Fritid", "Sport", "Fartøy"];
 
 const form = reactive({
   words: "",
-  category: ""
+  category: "",
+  city: ""
 })
 
 function filterAds() {
   const itemsArray = adsStore.items;
   return itemsArray.filter((ad, i) => {
-    return ad.title.toLowerCase().includes(form.words.toLowerCase());
-    // (ad.title.toLowerCase().includes(form.words.toLowerCase()) && categories[i] === form.category);
+    const matchingTitle = ad.title.toLowerCase().includes(form.words.toLowerCase());
+    const matchingCity = ad.location.toLowerCase().includes(form.city.toLowerCase());
+    const matchingCategory = !form.category || ad.category === form.category;
+
+    return matchingTitle
+      && matchingCategory
+      && matchingCity
+      && (matchingTitle && matchingCity)
+      && (matchingCity && matchingCategory)
+      && (matchingTitle && matchingCategory)
+      && (matchingTitle && matchingCategory && matchingCity)
   })
 
 }
@@ -100,5 +122,11 @@ ul {
   border-radius: 8px;
   object-fit: cover;
   aspect-ratio: 4 / 3;
+}
+
+.search {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 1rem;
 }
 </style>

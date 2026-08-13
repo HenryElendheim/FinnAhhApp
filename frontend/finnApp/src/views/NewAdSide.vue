@@ -20,12 +20,12 @@
       <label name="category"> Kategori </label>
       <select v-model="form.category" name="categories" id="">
         <option value="" selected disabled>Velg Kategori</option>
-        <option value="vehicles">Fartøy</option>
-        <option value="electronics">Elektronikk</option>
-        <option value="clothing">Klær</option>
-        <option value="furniture">Møbler</option>
-        <option value="leisure">Fritid</option>
-        <option value="sports">Sport</option>
+        <option value="Fartøy">Fartøy</option>
+        <option value="Elektronikk">Elektronikk</option>
+        <option value="Klær">Klær</option>
+        <option value="Møbler">Møbler</option>
+        <option value="Fritid">Fritid</option>
+        <option value="Sport">Sport</option>
       </select>
 
       <label>
@@ -85,6 +85,8 @@ function submit() {
     userId: usersStore.user!.userId,
     adId: uuidv7(), // placeholder until login exists -> everything is posted as Martin
   });
+  const gg = adsStore.items.filter(ad => ad.userId === usersStore.user!.userId);
+  usersStore.user!.ads = gg;
   router.push('/');
 }
 </script>

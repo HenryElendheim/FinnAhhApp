@@ -9,6 +9,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { createCollection } from '@/lib/storage'
 import type { Ad } from '@/types/models'
+import {useUsersStore} from "@/stores/users";
 
 // One line wires this store to its collection in storage.
 const ads = createCollection<Ad>('ads')

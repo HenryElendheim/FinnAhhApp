@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import type { User } from '@/types/models';
 import { createCollection } from '@/lib/storage';
 import { v7 as uuidv7 } from "uuid";
+import { useAdsStore } from './ads';
 
 const users = createCollection<User>('users');
 
@@ -10,6 +11,9 @@ export const useUsersStore = defineStore('users', () => {
   const items = ref<User[]>([]);
   const isLoggedIn = ref<boolean>(false);
   const user = ref<User | null>(null)
+  const adsStore = useAdsStore()
+
+  const usersAds = adsStore.items.filter(ad => ad.userId === user.value?.userId)
 
   function setLoggedIn(state : boolean = false) {
     isLoggedIn.value = state;
@@ -22,6 +26,8 @@ export const useUsersStore = defineStore('users', () => {
   function load() { items.value = users.getAll() };
   function create(data: Omit<User, 'userId' | 'createdAt'>) {
     users.add({ ...data, userId: uuidv7(), createdAt: new Date().toISOString() })
+    
+    
     load()
   }
 
