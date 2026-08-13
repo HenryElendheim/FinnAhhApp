@@ -83,10 +83,12 @@ function submit() {
     description: form.description,
     imageUrl: form.imageUrl, // use the image URL from the form
     userId: usersStore.user!.userId,
-    adId: uuidv7(), // placeholder until login exists -> everything is posted as Martin
+    adId: uuidv7(),
   });
-  const gg = adsStore.items.filter(ad => ad.userId === usersStore.user!.userId);
-  usersStore.user!.ads = gg;
+
+  console.log("FØR ENDRING: ", usersStore.user!.ads, "\n", usersStore.user!.userId);
+  usersStore.user!.ads = adsStore.items.filter(item => item.userId === usersStore.user!.userId);
+  console.log("ETTER ENDRING: ", usersStore.user!.ads, "\n", usersStore.user!.userId);
   router.push('/');
 }
 </script>

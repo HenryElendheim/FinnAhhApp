@@ -2,9 +2,17 @@
 import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useAdsStore } from '@/stores/ads';
+import { useUsersStore } from "@/stores/users";
 
 const route = useRoute();
 const adsStore = useAdsStore();
+const usersStore = useUsersStore();
+
+// const userName = [usersStore.items, adsStore.items].map((userAndAd, i) => )
+
+const creatorName = computed(() => {
+  return usersStore.items.find((user) => user.userId === ad.value?.userId)?.name || 'Ukjent selgeren';
+})
 
 onMounted(() => {
   adsStore.load();
@@ -25,6 +33,7 @@ const ad = computed(() => {
   <div>
     <button @click="$router.back()">Tilbake</button>
   </div>
+  <!-- <div v-for="ad in adsStore.items" class="ad"> -->
   <div v-if="ad" class="ad">
     <div class="left">
       <img :src="ad.imageUrl || '/public/placeholder.png'" alt="Ad Image" />
@@ -37,6 +46,8 @@ const ad = computed(() => {
       </h2>
       <p>{{ ad.description }}</p>
       <p>{{ ad.category }}</p>
+      <!-- <p>Selger: {{ userName }}</p> -->
+      <p>Selger: {{ creatorName }}</p>
     </div>
   </div>
   <p v-else>Annonsen ble ikke funnet.</p>
