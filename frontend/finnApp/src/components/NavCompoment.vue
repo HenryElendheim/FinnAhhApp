@@ -28,8 +28,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
-  max-width: 1200px;
+  padding: 1rem 0.2rem;
+  max-width: 1100px;
   margin: 0 auto;
   width: 100%;
 }

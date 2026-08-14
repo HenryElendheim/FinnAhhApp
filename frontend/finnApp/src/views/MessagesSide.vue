@@ -2,38 +2,59 @@
   <section class="view-card">
     <h1>Meldinger</h1>
     <div class="messages" v-if="meldinger.length > 0">
-      <div v-for="melding in meldinger" :key="melding.adId" class="message">
+      <div
+        v-for="melding in meldinger"
+        :key="`${melding.adId}-${melding.sentAt}-${melding.fromUserId}`"
+        class="message"
+      >
         <p><strong>Fra:</strong> {{ melding.fromUserId }}</p>
         <p><strong>Til:</strong> {{ melding.toUserId }}</p>
         <p><strong>Melding:</strong> {{ melding.body }}</p>
         <p><strong>Sendt:</strong> {{ melding.sentAt }}</p>
       </div>
     </div>
-      <div v-else>
-        <p>Ingen meldinger å vise.</p>
-      </div>
-    
+    <div v-else>
+      <p>Ingen meldinger å vise.</p>
+    </div>
   </section>
 </template>
 
 <script lang="ts" setup>
-import type {Message} from '@/types/models'
-import { ref } from 'vue'
-const props = defineProps<{
-  userId: string;
-}>()
-const meldinger = ref<Message[]>([])
+import { ref } from 'vue';
+import type { Message } from '@/types/models';
+
+const meldinger = ref<Message[]>([]);
 
 const fetchMeldinger = () => {
   meldinger.value = [
-    { adId: "1", fromUserId:'1', toUserId: "2", body: 'Hei! Hvordan går det?', sentAt: '2024-06-01T10:00:00Z', userId: '1' },
-    { adId: "2", fromUserId:'2', toUserId: "1", body: 'Hei! Det går bra, takk! Hva med deg?', sentAt: '2024-06-01T10:05:00Z', userId: '2' },
-    { adId: "3", fromUserId:'1', toUserId: "2", body: 'Jeg har det også bra. Har du sett den nye filmen?', sentAt: '2024-06-01T10:10:00Z', userId: '1' },
-  ]
-}
+    {
+      userId: 'u2',
+      adId: 'a1',
+      fromUserId: 'u2',
+      toUserId: 'u1',
+      body: 'Hei! Er sykkelen fortsatt tilgjengelig?',
+      sentAt: '2026-08-08T10:30:00.000Z',
+    },
+    {
+      userId: 'u1',
+      adId: 'a1',
+      fromUserId: 'u1',
+      toUserId: 'u2',
+      body: 'Hei! Ja, den er fortsatt tilgjengelig.',
+      sentAt: '2026-08-08T11:00:00.000Z',
+    },
+    {
+      userId: 'u1',
+      adId: 'a2',
+      fromUserId: 'u1',
+      toUserId: 'u2',
+      body: 'Hei! Jeg er interessert i sofaen. Kan vi avtale en visning?',
+      sentAt: '2026-08-09T09:15:00.000Z',
+    },
+  ];
+};
 
-
-
+fetchMeldinger();
 </script>
 
 <style scoped>
@@ -48,11 +69,10 @@ const fetchMeldinger = () => {
   flex-direction: column;
   gap: 1rem;
 }
-.message{
+.message {
   background: #f9f9f9;
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
 }
 </style>
-
