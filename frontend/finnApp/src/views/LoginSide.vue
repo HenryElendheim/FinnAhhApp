@@ -165,6 +165,13 @@ function submit() {
       password: loggingInUser.password,
       ads: [],
     });
+    const registeredUser = usersStore.items.find(
+      (user) => user.email === loggingInUser.email,
+    );
+    if (registeredUser !== undefined) {
+      usersStore.user = registeredUser;
+      usersStore.setLoggedIn(true);
+    }
     router.push('/profile');
     return;
   }
@@ -179,7 +186,7 @@ const login = () => {
 
   const doTheyExist = users.map(
     (user) =>
-      user.name === loggingInUser.email &&
+      user.email === loggingInUser.email &&
       user.password === loggingInUser.password,
   );
 
@@ -213,11 +220,7 @@ const login = () => {
 };
 
 const getLocalUsers = (): User[] => {
-  const localUsers = localStorage.getItem('users');
-  let users: User[];
-  if (localUsers === null) users = [];
-  else users = JSON.parse(localUsers);
-  return users;
+  return load<User>('users');
 };
 
 const setErrorMessage = (newMessage: string) => {

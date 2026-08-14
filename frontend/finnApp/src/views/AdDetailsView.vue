@@ -2,7 +2,7 @@
 import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useAdsStore } from '@/stores/ads';
-import { useUsersStore } from "@/stores/users";
+import { useUsersStore } from '@/stores/users';
 
 const route = useRoute();
 const adsStore = useAdsStore();
@@ -11,11 +11,15 @@ const usersStore = useUsersStore();
 // const userName = [usersStore.items, adsStore.items].map((userAndAd, i) => )
 
 const creatorName = computed(() => {
-  return usersStore.items.find((user) => user.userId === ad.value?.userId)?.name || 'Ukjent selgeren';
-})
+  return (
+    usersStore.items.find((user) => user.userId === ad.value?.userId)?.name ||
+    'Ukjent selgeren'
+  );
+});
 
 onMounted(() => {
   adsStore.load();
+  usersStore.load();
 });
 
 const ad = computed(() => {
